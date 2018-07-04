@@ -309,6 +309,7 @@ error:
 	return 0;
 }
 
+#ifndef DISCOVER_ONLY
 static void
 _probe_and_add_boot_code (const PedDisk* disk)
 {
@@ -328,7 +329,6 @@ _probe_and_add_boot_code (const PedDisk* disk)
 	free (s0);
 }
 
-#ifndef DISCOVER_ONLY
 static int
 bsd_write (const PedDisk* disk)
 {

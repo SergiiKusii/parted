@@ -124,6 +124,7 @@ sun_compute_checksum (SunRawLabel *label)
         label->csum = csum;
 }
 
+#ifndef DISCOVER_ONLY
 /* Checksum Verification */
 static int
 sun_verify_checksum (SunRawLabel const *label)
@@ -136,6 +137,7 @@ sun_verify_checksum (SunRawLabel const *label)
 
 	return !csum;
 }
+#endif
 
 static int
 sun_probe (const PedDevice *dev)
@@ -160,8 +162,8 @@ sun_probe (const PedDevice *dev)
 				PED_EXCEPTION_CANCEL,
 				_("Corrupted Sun disk label detected."));
 		}
-	}
 #endif
+	}
 
 	free (s0);
 	return ok;

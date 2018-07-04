@@ -436,6 +436,7 @@ chs_get_sector (const RawCHS* chs)
 	return (chs->sector & 0x3f) - 1;
 }
 
+#ifndef DISCOVER_ONLY
 static PedSector _GL_ATTRIBUTE_PURE
 chs_to_sector (const PedDevice* dev, const PedCHSGeometry *bios_geom,
 	       const RawCHS* chs)
@@ -504,6 +505,7 @@ legacy_end (const PedDisk* disk, const PedCHSGeometry* bios_geom,
 
 	return chs_to_sector (disk->dev, bios_geom, &raw_part->chs_end);
 }
+#endif
 
 static PedSector _GL_ATTRIBUTE_PURE
 linear_start (const PedDisk* disk, const DosRawPartition* raw_part,
@@ -569,6 +571,7 @@ disk_check_bios_geometry (const PedDisk* disk, PedCHSGeometry* bios_geom)
 
 	return 1;
 }
+#endif
 
 static int
 probe_filesystem_for_geom (const PedPartition* part, PedCHSGeometry* bios_geom)
@@ -830,6 +833,7 @@ partition_probe_bios_geometry (const PedPartition* part,
 	}
 }
 
+#ifndef DISCOVER_ONLY
 static void
 disk_probe_bios_geometry (const PedDisk* disk, PedCHSGeometry* bios_geom)
 {

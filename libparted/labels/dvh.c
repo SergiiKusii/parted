@@ -168,6 +168,7 @@ _checksum (const uint32_t* base, size_t size)
 	return sum;
 }
 
+#ifndef DISCOVER_ONLY
 /* try to make a reasonable volume header partition... */
 static PedExceptionOption
 _handle_no_volume_header (PedDisk* disk)
@@ -211,6 +212,7 @@ error_destroy_part:
 error:
 	return PED_EXCEPTION_CANCEL;
 }
+#endif
 
 static PedPartition*
 _parse_partition (PedDisk* disk, struct partition_table* pt)
@@ -255,8 +257,9 @@ _parse_boot_file (PedDisk* disk, struct volume_directory* vd)
 	return part;
 }
 
+#ifndef DISCOVER_ONLY
 static int dvh_write (const PedDisk* disk);
-
+#endif
 /* YUCK
  *
  *  If you remove a boot/root/swap partition, the disk->disk_specific

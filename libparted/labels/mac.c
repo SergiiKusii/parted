@@ -613,8 +613,10 @@ _rawpart_analyse (MacRawPartition* raw_part, PedDisk* disk, int num)
 
 	return part;
 
+#ifndef DISCOVER_ONLY
 error_destroy_part:
 	ped_partition_destroy (part);
+#endif /* !DISCOVER_ONLY */
 error:
 	return NULL;
 }

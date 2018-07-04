@@ -335,6 +335,7 @@ pth_new (const PedDevice *dev)
   return pth;
 }
 
+#ifndef DISCOVER_ONLY
 static GuidPartitionTableHeader_t *
 pth_new_zeroed (const PedDevice *dev)
 {
@@ -345,6 +346,7 @@ pth_new_zeroed (const PedDevice *dev)
 
   return (pth);
 }
+#endif
 
 static GuidPartitionTableHeader_t *
 pth_new_from_raw (const PedDevice *dev, const uint8_t *pth_raw)
@@ -710,11 +712,13 @@ _ptes_sectors(PedDisk const *disk, GuidPartitionTableHeader_t const *gpt)
 /* Return the header's idea of the last sector of the disk
  * based on LastUsableLBA and the Partition Entry table.
  */
+#ifndef DISCOVER_ONLY
 static PedSector
 _hdr_disk_end(PedDisk const *disk, GuidPartitionTableHeader_t const *gpt)
 {
   return PED_LE64_TO_CPU (gpt->LastUsableLBA) + 1 + _ptes_sectors(disk, gpt);
 }
+#endif
 
 static int
 _parse_header (PedDisk *disk, const GuidPartitionTableHeader_t *gpt,
@@ -955,9 +959,7 @@ gpt_read (PedDisk *disk)
 {
   GPTDiskData *gpt_disk_data = disk->disk_specific;
   int i;
-#ifndef DISCOVER_ONLY
   int write_back = 0;
-#endif
 
   ped_disk_delete_all (disk);
 

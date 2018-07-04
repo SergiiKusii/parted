@@ -123,8 +123,10 @@ static const char MBR_BOOT_CODE[] = {
 static PedDiskType pc98_disk_type;
 
 static PedSector chs_to_sector (const PedDevice* dev, int c, int h, int s);
+#ifndef DISCOVER_ONLY
 static void sector_to_chs (const PedDevice* dev, PedSector sector,
 			   int* c, int* h, int* s);
+#endif
 
 /* magic(?) check */
 static int
@@ -200,6 +202,7 @@ chs_to_sector (const PedDevice* dev, int c, int h, int s)
 	return (c * dev->hw_geom.heads + h) * dev->hw_geom.sectors + s;
 }
 
+#ifndef DISCOVER_ONLY
 static void
 sector_to_chs (const PedDevice* dev, PedSector sector, int* c, int* h, int* s)
 {
@@ -216,6 +219,7 @@ sector_to_chs (const PedDevice* dev, PedSector sector, int* c, int* h, int* s)
 	*h = (sector) % cyl_size / dev->hw_geom.sectors;
 	*s = (sector) % cyl_size % dev->hw_geom.sectors;
 }
+#endif
 
 static PedSector _GL_ATTRIBUTE_PURE
 legacy_start (const PedDisk* disk, const PC98RawPartition* raw_part)

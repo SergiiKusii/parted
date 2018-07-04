@@ -557,6 +557,7 @@ amiga_read (PedDisk* disk)
 	return 1;
 }
 
+#ifndef DISCOVER_ONLY
 static int
 _amiga_find_free_blocks(const PedDisk *disk, uint32_t *table,
 	struct LinkedBlock *block, uint32_t first, uint32_t type)
@@ -624,7 +625,7 @@ _amiga_next_real_partition(const PedDisk *disk, PedPartition *part) {
 		next = ped_disk_next_partition (disk, next));
 	return next;
 }
-#ifndef DISCOVER_ONLY
+
 static int
 amiga_write (const PedDisk* disk)
 {
